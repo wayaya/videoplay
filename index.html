@@ -9,7 +9,8 @@
             width: 100%;
             background: #000;
             position: relative;
-            padding-bottom: 56.25%; /*需要用padding来维持16:9比例,也就是9除以16*/
+            padding-bottom: 120%; /*需要用padding来维持16:9比例,也就是9除以16*/
+            /*padding-bottom: 56.25%; !*需要用padding来维持16:9比例,也就是9除以16*!*/
             height: 0;
             margin-top: 10px;
         }
@@ -24,9 +25,16 @@
     </style>
     <script type="text/javascript">
         let seq = [];  // 视频播放序列
+        let seq201906 = [];
+        let seq201907 = [];
+        let seq201908 = [];
+        let seq201909 = [];
+        let seq201910 = [];
+        let seq201911 = [];
+        let seq201912 = [];
 
-        function init() {
-            for (let i = 0; i < 67; i++) {
+        function init(seq, length) {
+            for (let i = 0; i < length; i++) {
                 seq.push(i);
             }
 
@@ -59,29 +67,80 @@
             console.log(sourceList);
         }
 
-        function playNext() {
+        function playNext(seq, path) {
             if (seq.length === 0) {
-                init();  // 初始化
+                allInit();  // 初始化
             }
 
             let e = seq.shift();
             console.log(e);
 
             let video = document.getElementById("video");
-            video.setAttribute("src", "videos/2019-05/" + e + ".mp4");
+            video.setAttribute("src", path + e + ".mp4");
+            let palyPromise = video.play();
+            palyPromise.then((res) => {
+                console.log("可以播放了:", res);
+            }, (err) => {
+                console.log("没有获取播放数据:", err);
+            }).catch((e) => {
+                console.log("出错了:", e);
+            });
             console.log(seq);
         }
 
-        init(); // 初始化
+        function allInit() {
+            init(seq, 67); // 初始化
+            init(seq201906, 141); // 初始化
+            init(seq201907, 146); // 初始化
+            init(seq201908, 233); // 初始化
+            init(seq201909, 53); // 初始化
+            init(seq201910, 81); // 初始化
+            init(seq201911, 11); // 初始化
+            init(seq201912, 54); // 初始化
+        }
+
+        allInit();
     </script>
 </head>
 <body>
-<button onclick="playNext();">test</button>
 <div class="vid-wrap">
     <video id="video" controls="controls" autoplay loop="loop" src="videos/2019-05/0.mp4">
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+</div>
+<div>
+    <button onclick="playNext(seq,'videos/2019-05/');"
+            style="width:fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px">2019-05 下一个
+    </button>
+    <button onclick="playNext(seq201906,'videos/2019-06/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right:10px;">2019-06
+        下一个
+    </button>
+    <button onclick="playNext(seq201907,'videos/2019-07/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px;">
+        2019-07 下一个
+    </button>
+    <button onclick="playNext(seq201908,'videos/2019-08/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px;">
+        2019-08 下一个
+    </button>
+    <button onclick="playNext(seq201909,'videos/2019-09/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px;">
+        2019-09 下一个
+    </button>
+    <button onclick="playNext(seq201910,'videos/2019-10/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px;">
+        2019-10 下一个
+    </button>
+    <button onclick="playNext(seq201911,'videos/2019-11/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px;">
+        2019-11 下一个
+    </button>
+    <button onclick="playNext(seq201912,'videos/2019-12/');"
+            style="width: fit-content;margin-top: 6px;padding: 4px;float: left;margin-right: 10px;">
+        2019-12 下一个
+    </button>
 </div>
 </body>
 </html>
