@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>风俗视频</title>
+    <style type="text/css">
+        .vid-wrap {
+            width: 100%;
+            background: #000;
+            position: relative;
+            padding-bottom: 56.25%; /*需要用padding来维持16:9比例,也就是9除以16*/
+            height: 0;
+            margin-top: 10px;
+        }
+
+        .vid-wrap video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%
+        }
+    </style>
+    <script type="text/javascript">
+        let seq = [];  // 视频播放序列
+
+        function init() {
+            for (let i = 0; i < 67; i++) {
+                seq.push(i);
+            }
+
+            seq.sort(() => {
+                return Math.random() - 0.5;
+            });
+            console.log(seq);
+        }
+
+        function test() {
+            let video = document.getElementById("video");
+            /*
+            let vsrc = document.getElementById("vsrc");
+            vsrc.setAttribute("src", "videos/2019-05/3.mp4");
+            console.log(vsrc)
+            */
+
+            let sourceList = video.getElementsByTagName("source");
+            console.log(sourceList);
+            video.removeChild(sourceList[0]); // 删除第一个source元素
+
+            // 添加新的source
+            let source = document.createElement("source");
+            source.setAttribute("src", "videos/2019-05/3.mp4");
+            source.setAttribute("type", "video/mp4");
+            video.appendChild(source);
+            // video.play();  // 开始播放
+
+            sourceList = video.getElementsByTagName("source");
+            console.log(sourceList);
+        }
+
+        function playNext() {
+            if (seq.length === 0) {
+                init();  // 初始化
+            }
+
+            let e = seq.shift();
+            console.log(e);
+
+            let video = document.getElementById("video");
+            video.setAttribute("src", "videos/2019-05/" + e + ".mp4");
+            console.log(seq);
+        }
+
+        init(); // 初始化
+    </script>
+</head>
+<body>
+<button onclick="playNext();">test</button>
+<div class="vid-wrap">
+    <video id="video" controls="controls" autoplay loop="loop" src="videos/2019-05/0.mp4">
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+</body>
+</html>
